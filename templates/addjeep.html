@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if player %}
+{% if form.errors or auth_error%}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+        {% for error in field_errors %}
+          <li>{{ form[field_name].label }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% if auth_error %}
+        <li>{{ auth_error }}</li>
+      {% endif %}
+    </ul>
+  </div>  
+{% endif %}
+
+<form role="form" method="POST" action="/addjeep">
+	<div class="form-group" >
+		<label class="control-label">Jeep Color</label>
+		{% for value, label, _ in form.color.iter_choices() %}
+		<div class="radio">
+			<label>
+				<input type="radio" name="{{ form.color.id }}" id="{{ form.color.id }}" value="{{ value }}">{{ label }}
+				 </label>
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="form-group">
+		{{ form.location.label }}: {{ form.location(class="form-control") }}
+	</div>
+
+	<div class="form-group">
+		<input type ="hidden" name="{{ form.player.id }}" id="{{ form.player.id }}" value="{{ form.player.value }}">
+	</div>
+
+	<button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endif %}
+{% endblock %}

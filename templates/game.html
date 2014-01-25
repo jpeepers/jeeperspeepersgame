@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+  <h1>{{ game.name }}</h1>
+  {% if not gameMember %}
+	<a href="/joingame?game={{ game.key.id() }}"><p>Join this game!</p></a>
+  {% endif %}  
+</div>
+<div class="row">
+{% for id, player in players.iteritems() %}
+
+<div class="col-xs-12 col-sm-6 col-md-4">
+	<div class="pull-left" style="margin-right:15px;text-align:center">
+	  	<div>
+	  		<h3>{{ player['score'] }}</p>
+		</div>
+		<div>
+		 	<p>score</p>
+		</div>
+	</div>
+
+	<div class="pull-left" style="margin-right:15px;">
+	  <div>
+	    <h3><span class="glyphicon glyphicon-user"></span></h3>
+	  </div>
+	  <div>
+		<span class="glyphicon glyphicon-th-large pull-left" style="color:{{ player['pColor'] }}"></span>
+		<span class="glyphicon glyphicon-th-large pull-left" style="color:{{ player['bColor'] }}"></span>
+	  </div>
+	</div>
+
+	<div class="pull-left" style="margin-right:15px;">
+	  	<div>
+	  		<h3 >{{ player['name'] }}</h3>
+		</div>
+		{% if player['currentUser'] %}
+		<div id="{{ id }}">
+			<a class="btn btn-default btn-xs" role="button" href="/addjeep?player={{ id }}">
+			  <span class="glyphicon glyphicon-chevron-up"></span>
+			  Add Jeep
+			</a>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
+
+
+

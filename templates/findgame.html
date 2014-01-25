@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <tbody>
+    	{% for id, game in games.iteritems() %}
+    	<tr>
+    		<td>{{game['name']}}</td>
+    		<td>{{game['count']}}</td>
+    		<td><a href="/joingame?game={{id}}">Join Now!</a></td>
+    	</tr>
+    	{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+<ul class="pagination">
+  {% if offset <= 0  %}
+  <li class="disabled"><a href="">&laquo;</a></li>
+  {% else %}
+  <li><a href="/findgame?offset={{ offset - fetchSize if (offset - fetchSize) >=0 else 0 }}{% if search %}&search={{ search }}{% endif %}">&laquo;</a></li>
+  {% endif %}
+  
+  {% for n in range(1,(count/fetchSize)|round(0,'ceil')|int + 1) %}
+  {% if n == (offset/fetchSize)|round(0,'floor')|int + 1 %}
+  <li class="active"><a href="">{{n}}</a></li>
+  {% else %}
+  <li><a href="findgame?offset={{ (n-1) * fetchSize}}{% if search %}&search={{ search }}{% endif %}">{{n}}</a></li>
+  {% endif %}
+  {% endfor %}
+  {% if (offset+fetchSize) >= count %}
+  <li class="disabled"><a href="">&raquo;</a></li>
+  {% else %}
+  <li><a href="/findgame?offset={{offset + fetchSize}}{% if search %}&search={{ search }}{% endif %}">&raquo;</a></li>
+  {% endif %}
+</ul>
+
+
+{% endblock %}

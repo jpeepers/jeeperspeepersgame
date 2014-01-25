@@ -1,0 +1,46 @@
+application: jeeperspeepersgame
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+#skip_files:
+#builtins
+
+handlers:
+- url: /img/(.*\.(gif|png|jpg|jpeg))
+  static_files: static/img/\1
+  upload: static/img/(.*\.(gif|png|jpg|jpeg))
+
+- url: /css/(.*\.(gif|png|jpg|jpeg))
+  static_files: static/css/\1
+  upload: static/css/(.*\.(gif|png|jpg|jpeg))
+
+- url: /fonts
+  mime_type: application/octet-stream
+  static_dir: static/fonts
+
+- url: /css
+  mime_type: text/css
+  static_dir: static/css
+
+- url: /js
+  mime_type: text/javascript
+  static_dir: static/js
+
+- url: /.*
+  script: main.app
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: webapp2
+  version: "2.5.2"
+
+# error_handlers:
+#   - error_code: over_quota
+#     file: 
+#   - error_code: dos_api_denial
+#     file: 
+#   - error_code: timeout
+#     file: 

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+  <h1>Register</h1>
+  <p class="lead">Create your new Jeepers Peepers account today!</p>
+</div>
+<div class="well col-sm-6">
+{% if form.errors  or reg_error %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+        {% for error in field_errors %}
+          <li>{{ form[field_name].label }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% if reg_error %}
+        <li>{{ reg_error }}</li>
+      {% endif %}
+    </ul>
+  </div>  
+{% endif %}
+<form role="form-horizontal" method="POST" action="/register">
+    <div class="form-group">{{ form.username.label }}: {{ form.username(class="form-control") }}</div>
+    <div class="form-group">{{ form.email.label }}: {{ form.email(class="form-control") }}</div>
+    <div class="form-group">{{ form.password.label }}: {{ form.password(class="form-control") }}</div>
+    <div class="form-group">{{ form.password_confirm.label }}: {{ form.password_confirm(class="form-control") }}</div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+</div>
+{% endblock %}

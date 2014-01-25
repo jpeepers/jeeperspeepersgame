@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="jumbotron">
+    <h1>Lets get peeping...</h1>
+    <a href="/newgame"><h3>Create a new game</h3></a>
+    <p>Stat a new game today.  Invite your friends and see who can peep the most jeeps</p>
+    <a href="/findgame"><h3>Join an existing game</h3></a>
+    <p>Did someone you know create a game? Find it now and start playing!</p>
+   
+  </div>
+
+	<div class="page-header">
+	  <h1>Games for: {{ displayUser.username }}</h1>
+	</div>
+	<div class="row">
+	{% for id, player in players.iteritems() %}
+
+	<div class="col-xs-12 col-sm-6 col-md-4">
+		<a href="/game/{{ player['game_id'] }}">
+			<h3>{{ player['game_name'] }}</h3>
+		</a>
+		<ul class="list-inline">
+	    	<li>
+	    		<span class="glyphicon glyphicon-th-large pull-left" style="color:{{ player['pColor'] }}"></span>
+	    		<span class="glyphicon glyphicon-th-large pull-left" style="color:{{ player['bColor'] }}"></span>
+	    	</li>
+	    	<li>
+				<p> {{ player['score'] }} pts ({{ player['rank'] }}/{{ player['total_players'] }})</p>
+	    	</li>
+		</ul>
+	</div>
+
+  	{% endfor %}
+  	</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if game %}
+{% if form.errors  or auth_error %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+        {% for error in field_errors %}
+          <li>{{ form[field_name].label }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% if auth_error %}
+        <li>{{ auth_error }}</li>
+      {% endif %}
+    </ul>
+  </div>    
+{% endif %}
+<form role="form" method="POST" action="/joingame">
+    <div class="form-group">
+      <input type ="hidden" name="{{ form.game.id }}" id="{{ form.game.id }}" value="{{ form.game.value }}"></div>
+    <div class="form-group">{{ form.password.label }}: {{ form.password(class="form-control") }}</div>
+    <div class="form-group">{{ form.color1.label }}: {{ form.color1(class="form-control") }}</div>
+    <div class="form-group">{{ form.color2.label }}: {{ form.color2(class="form-control") }}</div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endif %}
+{% endblock %}
